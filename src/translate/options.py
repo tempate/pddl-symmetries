@@ -93,6 +93,13 @@ def parse_args():
         "--stop-after-computing-symmetries", action="store_true",
         help="If true, stop after computing symmetries. (Set option "
         "--compute-symmetries)")
+    argparser.add_argument(
+        "--symmetries-before-grounding", action="store_true",
+        help="If true, compute the symmetric object sets on the lifted task "
+        "and stop before grounding. Objects are filtered by the initial state "
+        "instead of the reachable atoms. (Set options --compute-symmetries, "
+        "--only-object-symmetries and "
+        "--compute-symmetric-object-sets-from-symmetries)")
 
     # Options related to computing symmetric object sets
     argparser.add_argument(
