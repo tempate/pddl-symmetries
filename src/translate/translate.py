@@ -784,9 +784,8 @@ def main():
             generators = symmetries.compute_generators(task)
         with timers.timing("Computing object symmetries from symmetries", block=True):
             transpositions = symmetries.compute_transpositions(generators)
-            # Without grounding there are no reachable atoms, so the initial state stands in for them.
-            initial_atoms = [fact for fact in task.init if isinstance(fact, pddl.Atom)]
-            symmetries.compute_symmetric_object_sets(task.objects, transpositions, initial_atoms)
+            # Without grounding there are no reachable atoms to filter the sets by.
+            symmetries.compute_symmetric_object_sets(task.objects, transpositions, None)
         sys.exit(0)
 
     sas_task = pddl_to_sas(task)
