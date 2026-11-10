@@ -778,6 +778,16 @@ def main():
                 if effect.literal.negated:
                     del action.effects[index]
 
+    if options.symmetries_before_grounding:
+        assert options.compute_symmetric_object_sets_from_symmetries
+        with timers.timing("Symmetries computing symmetries", block=True):
+            generators = symmetries.compute_generators(task)
+        with timers.timing("Computing object symmetries from symmetries", block=True):
+            transpositions = symmetries.compute_transpositions(generators)
+            # Without grounding there are no reachable atoms to filter the sets by.
+            symmetries.compute_symmetric_object_sets(task.objects, transpositions, None)
+        sys.exit(0)
+
     sas_task = pddl_to_sas(task)
     dump_statistics(sas_task)
 

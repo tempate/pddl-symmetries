@@ -578,10 +578,13 @@ def compute_symmetric_object_sets(objects, transpositions, atoms):
 
     # Filter symmetric object sets that consist of only
     # one object or whose objects are not part of any
-    # reachable atom.
+    # reachable atom. Without atoms, keep every set.
     non_trivial_symmetric_object_sets = []
     for symmetric_object_set in symmetric_object_sets:
         if len(symmetric_object_set) > 1:
+            if atoms is None:
+                non_trivial_symmetric_object_sets.append(sorted(symmetric_object_set))
+                continue
             for atom in atoms:
                 if any(obj in symmetric_object_set for obj in atom.args):
                     non_trivial_symmetric_object_sets.append(sorted(symmetric_object_set))
